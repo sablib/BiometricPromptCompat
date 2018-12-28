@@ -211,13 +211,15 @@ public final class BiometricPromptCompat {
                 return new BiometricPromptCompat(
                         new BiometricPromptApi28Impl(context, builder.build())
                 );
-            } else {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 return new BiometricPromptCompat(
                         new BiometricPromptApi23Impl(
                                 context, title, subtitle, description,
                                 negativeButtonText, negativeButtonListener
                         )
                 );
+            } else {
+                return new BiometricPromptCompat(new BiometricPromptApiImpl(context));
             }
         }
 
