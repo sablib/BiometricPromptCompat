@@ -1,5 +1,6 @@
 package moe.feng.support.biometricprompt;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -72,4 +73,15 @@ class BiometricPromptCompatDialog extends Dialog {
         return mFingerprintIcon;
     }
 
+    @Override
+    public void dismiss() {
+        Context context = getContext();
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            if (activity.isDestroyed() || activity.isFinishing()) {
+                return;
+            }
+        }
+        super.dismiss();
+    }
 }
